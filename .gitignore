@@ -1,5 +1,4 @@
-node_modules
 .env
-
 .idea
-/services/user-service/prisma/src/modules/admin/infastructure
+
+/nodemodules
