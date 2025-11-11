@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRoleEnum {
+  ADMIN
+  USER
+}
+
+enum UserLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+model User {
+  id             String             @id @default(uuid())
+  firstName      String
+  lastName       String
+  email          String             @unique
+  password       String
+  roleId         String
+  role           Role               @relation(fields: [roleId], references: [id])
+  profile        UserProfile?
+  achievements   UserAchievement[]
+  activities     RecentActivity[]
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+}
+
+model Role {
+  id          String       @id @default(uuid())
+  name        UserRoleEnum
+  description String?
+  users       User[]
+}
+
+model UserProfile {
+  id             String     @id @default(uuid())
+  userId         String     @unique
+  level          UserLevel
+  topicCompleted Int
+  learningStreak Int
+  totalXp        Int
+  user           User       @relation(fields: [userId], references: [id])
+}
+
+model RecentActivity {
+  id             String    @id @default(uuid())
+  userId         String
+  activityType   String
+  activityDate   DateTime  @default(now())
+  user           User      @relation(fields: [userId], references: [id])
+}
+
+model Badge {
+  id             String    @id @default(uuid())
+  badgeType      String
+  badgeUrl       String
+  badgeDate      DateTime  @default(now())
+  achievements   UserAchievement[]
+}
+
+model UserAchievement {
+  id              String    @id @default(uuid())
+  userId          String
+  badgeId         String
+  achievementDate DateTime  @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  badge  Badge  @relation(fields: [badgeId], references: [id])
+
+  @@unique([userId, badgeId])
+}
