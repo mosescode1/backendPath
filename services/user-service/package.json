@@ -1,13 +1,15 @@
 {
   "name": "server",
   "scripts": {
-    "dev": "bun run --hot src/app/index.ts"
+    "dev": "bun run --hot index.ts",
+    "seed": "bunx prisma db seed"
   },
   "dependencies": {
     "@prisma/extension-accelerate": "^2.0.2",
     "@types/node": "^24.9.2",
     "dotenv": "^17.2.3",
     "hono": "^4.10.3",
+    "hono-rate-limiter": "^0.4.2",
     "prisma": "^6.18.0",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"

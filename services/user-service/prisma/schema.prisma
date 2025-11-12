@@ -44,10 +44,10 @@ model Role {
 model UserProfile {
   id             String     @id @default(uuid())
   userId         String     @unique
-  level          UserLevel
-  topicCompleted Int
-  learningStreak Int
-  totalXp        Int
+  level          UserLevel  @default(BEGINNER)
+  topicCompleted Int        @default(0)
+  learningStreak Int        @default(0)
+  totalXp        Int        @default(0)
   user           User       @relation(fields: [userId], references: [id])
 }
 

@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "UserProfile" ALTER COLUMN "level" SET DEFAULT 'BEGINNER',
+ALTER COLUMN "topicCompleted" SET DEFAULT 0,
+ALTER COLUMN "learningStreak" SET DEFAULT 0,
+ALTER COLUMN "totalXp" SET DEFAULT 0;
